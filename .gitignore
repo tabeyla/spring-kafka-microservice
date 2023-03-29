@@ -1,0 +1,5 @@
+# Project exclude paths
+.classpath
+.project
+.settings/
+target/
