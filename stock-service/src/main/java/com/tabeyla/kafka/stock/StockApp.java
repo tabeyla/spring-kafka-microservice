@@ -1,11 +1,10 @@
-package com.tabeyla.kafka.payment;
+package com.tabeyla.kafka.stock;
 
 import com.tabeyla.kafka.domain.Order;
-import com.tabeyla.kafka.payment.domain.Customer;
-import com.tabeyla.kafka.payment.repository.CustomerRepository;
-import com.tabeyla.kafka.payment.service.PaymentManagerService;
+import com.tabeyla.kafka.payment.domain.Product;
+import com.tabeyla.kafka.payment.repository.ProductRepository;
+import com.tabeyla.kafka.stock.service.StockManagerService;
 import jakarta.annotation.PostConstruct;
-import net.datafaker.Faker;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -23,45 +22,46 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-import java.time.Duration;
 import java.util.Random;
 
 @SpringBootApplication
 @EnableKafka
-public class PaymentApp {
-    private static final Logger LOG = LoggerFactory.getLogger(PaymentApp.class);
+public class StockApp {
+    private static final Logger LOG = LoggerFactory.getLogger(StockApp.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(PaymentApp.class, args);
+        SpringApplication.run(StockApp.class, args);
 
     }
 
     @Autowired
-    PaymentManagerService paymentManagerService;
-    @KafkaListener(id = "orders", topics = "orders", groupId = "payment")
+    StockManagerService stockManagerService;
+
+    @KafkaListener(id="orders", topics="orders", groupId = "stock")
     public void onEvent(Order o) {
-        LOG.info("Received: {}", o);
-        if(o.getStatus().equals("NEW")) {
-            paymentManagerService.reserve(o);
-        }
-        else {
-            paymentManagerService.confirm(o);
-        }
+        LOG.info("Received: {}" , o);
+        if (o.getStatus().equals("NEW"))
+            stockManagerService.reserve(o);
+        else
+            stockManagerService.confirm(o);
     }
 
 
     @Autowired
-    CustomerRepository customerRepository;
+    private ProductRepository repository;
 
     @PostConstruct
     public void generateData() {
         Random r = new Random();
-        Faker faker = new Faker();
-        for(int i=0; i< 100; i++) {
-            int count = r.nextInt(100, 1000);
-            Customer c = new Customer(null, faker.name().fullName(), count,0);
-            customerRepository.save(c);
+        for (int i = 0; i < 1000; i++) {
+            int count = r.nextInt(10, 1000);
+            Product p = new Product(null, "Product" + i, count, 0);
+            repository.save(p);
         }
     }
+
+
+
+
 
 }

@@ -19,6 +19,7 @@
         <module>base-domain</module>
         <module>order-service</module>
         <module>payment-service</module>
+        <module>stock-service</module>
     </modules>
 
     <build>

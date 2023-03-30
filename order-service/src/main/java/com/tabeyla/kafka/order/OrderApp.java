@@ -7,6 +7,7 @@ import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.JoinWindows;
+import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.StreamJoined;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,12 +47,11 @@ public class OrderApp {
         return TopicBuilder.name("stock").partitions(1).compact().build();
     }
 
-
     @Autowired
     OrderManagerService orderManagerService;
 
     @Bean
-    public void stream(StreamsBuilder builder) {
+    public KStream<Long, Order> stream(StreamsBuilder builder) {
         JsonSerde<Order> orderSerde = new JsonSerde<>(Order.class);
 
         var stream = builder.stream("payment", Consumed.with(Serdes.Long(), orderSerde));
@@ -62,6 +62,8 @@ public class OrderApp {
                 StreamJoined.with(Serdes.Long(), orderSerde, orderSerde)
 
         ).peek((k,o) -> LOG.info("Output: {}", o)).to("orders");
+
+        return stream;
     }
 
 }

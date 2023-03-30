@@ -1,5 +1,5 @@
-spring.application.name: payments
-server.port: 8081
+spring.application.name: stocks
+server.port: 8082
 spring.kafka:
   bootstrap-servers: 127.0.0.1:36995
   consumer:
@@ -7,9 +7,9 @@ spring.kafka:
     value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     properties:
       spring.json.trusted.packages: "*"
-  producer:
-    key-serializer: org.apache.kafka.common.serialization.LongSerializer
-    value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 spring.output.ansi.enabled: ALWAYS
 
