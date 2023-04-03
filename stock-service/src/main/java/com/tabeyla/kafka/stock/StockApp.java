@@ -1,26 +1,17 @@
 package com.tabeyla.kafka.stock;
 
 import com.tabeyla.kafka.domain.Order;
-import com.tabeyla.kafka.payment.domain.Product;
-import com.tabeyla.kafka.payment.repository.ProductRepository;
+import com.tabeyla.kafka.stock.domain.Product;
+import com.tabeyla.kafka.stock.repository.ProductRepository;
 import com.tabeyla.kafka.stock.service.StockManagerService;
 import jakarta.annotation.PostConstruct;
-import org.apache.kafka.clients.admin.NewTopic;
-import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.kstream.Consumed;
-import org.apache.kafka.streams.kstream.JoinWindows;
-import org.apache.kafka.streams.kstream.StreamJoined;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.config.TopicBuilder;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.Random;
 
@@ -46,9 +37,8 @@ public class StockApp {
             stockManagerService.confirm(o);
     }
 
-
     @Autowired
-    private ProductRepository repository;
+    ProductRepository repository;
 
     @PostConstruct
     public void generateData() {

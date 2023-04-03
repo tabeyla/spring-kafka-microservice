@@ -1,4 +1,4 @@
-package com.tabeyla.kafka.payment.domain;
+package com.tabeyla.kafka.stock.domain;
 
 
 import jakarta.persistence.Entity;
@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-
 public class Product {
 
     @Id

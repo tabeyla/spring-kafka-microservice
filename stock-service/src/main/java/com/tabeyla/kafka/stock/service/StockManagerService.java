@@ -1,8 +1,8 @@
 package com.tabeyla.kafka.stock.service;
 
 import com.tabeyla.kafka.domain.Order;
-import com.tabeyla.kafka.payment.domain.Product;
-import com.tabeyla.kafka.payment.repository.ProductRepository;
+import com.tabeyla.kafka.stock.domain.Product;
+import com.tabeyla.kafka.stock.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -15,6 +15,7 @@ public class StockManagerService {
     private static final Logger LOG = LoggerFactory.getLogger(StockManagerService.class);
     private ProductRepository repository;
     private KafkaTemplate<Long, Order> template;
+
 
     public StockManagerService(ProductRepository repository, KafkaTemplate<Long, Order> template) {
         this.repository = repository;

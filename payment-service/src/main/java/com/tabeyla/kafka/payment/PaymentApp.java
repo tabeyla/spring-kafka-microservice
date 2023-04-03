@@ -6,12 +6,7 @@ import com.tabeyla.kafka.payment.repository.CustomerRepository;
 import com.tabeyla.kafka.payment.service.PaymentManagerService;
 import jakarta.annotation.PostConstruct;
 import net.datafaker.Faker;
-import org.apache.kafka.clients.admin.NewTopic;
-import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.kstream.Consumed;
-import org.apache.kafka.streams.kstream.JoinWindows;
-import org.apache.kafka.streams.kstream.StreamJoined;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
